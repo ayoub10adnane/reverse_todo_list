@@ -12,9 +12,7 @@ services:
       - app-network
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: <DOCKER_USERNAME>/reverse-todo-backend:latest
     container_name: backend
     restart: always
     ports:
@@ -27,11 +25,7 @@ services:
       - app-network
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        REACT_APP_API_URL: http://localhost:3001
+    image: <DOCKER_USERNAME>/reverse-todo-frontend:latest
     container_name: frontend
     restart: always
     ports:
