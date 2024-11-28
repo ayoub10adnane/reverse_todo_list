@@ -16,7 +16,7 @@ function TaskInput({ addTask }) {
             <input
                 type="text"
                 value={description}
-                placeholder="What did you accomplish?"
+                placeholder="Who cares brotha?"
                 onChange={(e) => setDescription(e.target.value)}
             />
             <button type="submit">Add</button>
