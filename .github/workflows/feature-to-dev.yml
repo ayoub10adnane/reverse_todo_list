@@ -1,0 +1,48 @@
+name: Feature to Dev Merge Workflow
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies and run tests (Frontend)
+      working-directory: ./frontend
+      run: |
+        npm install
+        npm test
+
+    - name: Install dependencies and run tests (Backend)
+      working-directory: ./backend
+      run: |
+        npm install
+        npm test
+
+  merge-dev-to-main:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: success()
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Merge dev into main
+      uses: devmasx/merge-branch@v2
+      with:
+        type: merge
+        from_branch: dev
+        target_branch: main
+        github_token: ${{ secrets.GITHUB_TOKEN }}
